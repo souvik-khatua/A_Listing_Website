@@ -8,9 +8,8 @@ const listingSchema = new Schema({
     },
     description: String,
     image:{
-        default:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0zWifWgK-Dbh0IuyJT-LHUnBlgz1j4LQ4Jg&s",
-        type:String,
-    set:(v) => v ==="" ? "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0zWifWgK-Dbh0IuyJT-LHUnBlgz1j4LQ4Jg&s" : v,
+       url: String,
+       filename:String,
     },
     price: { type: Number, default: 0 },
     location: String,
@@ -21,6 +20,27 @@ const listingSchema = new Schema({
             ref: "Review",
         },
     ],
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    },
+
+   geometry: {
+    type: {
+        type: String,
+        enum: ['Point'],
+        required: true
+      },
+      coordinates: {
+        type: [Number],
+        required: true
+      },
+   },
+//    category: {
+//     type: String,
+//     enum: ["mountains", "arctic", "Farms", "Deserts"],
+//    }
+
 });
 
 listingSchema.post("findOneAndDelete", async (listing)=>{
